@@ -28,6 +28,21 @@ var albumMarconi = {
 	]
 };
 
+var albumResso = {
+	title: 'Cookie Time',
+	artist: 'Erin Resso',
+	label: 'OvenJams',
+	year: '2016',
+	albumArtUrl: 'assets/images/album_covers/09.png',
+	songs: [
+		{ title: 'Snickerdoodle', duration: '2:53' },
+		{ title: 'Chocolate Chip', duration: '4:23' },
+		{ title: 'Sugar Sprinkle', duration: '3:09' },
+		{ title: 'Ginger Snap', duration: '8:01' },
+		{ title: 'Peanut Butter', duration: '1:46' }
+	]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
 	var template =
 		'<tr class="album-view-song-item">'
@@ -62,3 +77,15 @@ var setCurrentAlbum = function(album) {
 window.onload = function() {
 	setCurrentAlbum(albumPicasso);
 };
+
+var albums = [albumPicasso, albumMarconi, albumResso];
+var idx = 1;
+var nextAlbum = function() {
+	setCurrentAlbum(albums[idx]);
+	idx ++;
+	if (idx == 3) {
+		idx = 0;
+	};
+};
+
+document.getElementsByClassName('album-cover-art')[0].addEventListener('click', nextAlbum);
