@@ -76,16 +76,17 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
 	setCurrentAlbum(albumPicasso);
-};
-
-var albums = [albumPicasso, albumMarconi, albumResso];
-var idx = 1;
-var nextAlbum = function() {
-	setCurrentAlbum(albums[idx]);
-	idx ++;
-	if (idx == 3) {
-		idx = 0;
+	
+	var albums = [albumPicasso, albumMarconi, albumResso];
+	var idx = 1;
+	var nextAlbum = function() {
+		setCurrentAlbum(albums[idx]);
+		idx ++;
+		if (idx == 3) {
+			idx = 0;
+		};
 	};
+
+	document.getElementsByClassName('album-cover-art')[0].addEventListener('click', nextAlbum);
 };
 
-document.getElementsByClassName('album-cover-art')[0].addEventListener('click', nextAlbum);
