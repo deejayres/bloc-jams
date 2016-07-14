@@ -80,48 +80,23 @@ var updatePlayerBarSong = function() {
     $('.main-controls .play-pause').html(playerBarPauseButton);
 };
 
-var nextSong = function() {
-    //tracking the song we are switching away from
+var changeSong = function(direction) {
     var nowPreviousIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     var nowPreviousSongNumber = nowPreviousIndex + 1;
+    var nowPlayingNumber = null;
     
-    //wrap around to first song from last song
-    if (nowPreviousIndex === currentAlbum.songs.length - 1 ) {
-        setSong(1);
+    if (direction === "prev") {
+        (nowPreviousIndex === 0) ? setSong(currentAlbum.songs.length) : setSong(nowPreviousSongNumber - 1);
     } else {
-        var nowPlayingNumber = nowPreviousSongNumber + 1;
-        setSong(nowPlayingNumber);
+        (nowPreviousIndex === currentAlbum.songs.length -1) ? setSong(1) : setSong(nowPreviousSongNumber + 1);
     };
     
     updatePlayerBarSong();
-  
-	//move pause button in list appropriately
-	var nowPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
-    nowPlayingCell.html(pauseButtonTemplate);
-	var newPreviousCell = getSongNumberCell(nowPreviousSongNumber);
-    newPreviousCell.html(nowPreviousSongNumber);
-};
-
-var previousSong = function() {
-    //tracking the song we are switching away from
-    var nowPreviousIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-    var nowPreviousSongNumber = nowPreviousIndex + 1;
     
-    //wrap around to last song from first song
-    if (nowPreviousIndex === 0 ) {
-        setSong(currentAlbum.songs.length);
-    } else {
-        var nowPlayingNumber = nowPreviousSongNumber - 1;
-        setSong(nowPlayingNumber);
-    };
-    
-    updatePlayerBarSong();
-  
-	//move pause button in list appropriately
-	var nowPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var nowPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
     nowPlayingCell.html(pauseButtonTemplate);
-	var newPreviousCell = getSongNumberCell(nowPreviousSongNumber);
-    newPreviousCell.html(nowPreviousSongNumber);
+    var nowPreviousCell = getSongNumberCell(nowPreviousSongNumber);
+    nowPreviousCell.html(nowPreviousSongNumber);
 };
 
 var setSong = function(songNumber) {
@@ -147,8 +122,10 @@ var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
 	setCurrentAlbum(albumPicasso);
-	$previousButton.click(previousSong);
-	$nextButton.click(nextSong);
+	$previousButton.click(function () {
+        changeSong("prev");
+    });
+	$nextButton.click(function() {
+        changeSong("next");
+    });
 });
-
-
